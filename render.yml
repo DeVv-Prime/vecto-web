@@ -1,53 +1,17 @@
 services:
   - type: web
-    name: vecho-hub-dashboard
+    name: vecho-hub
     runtime: python
-    repo: https://github.com/yourusername/vecho-hub  # Change this to your repo URL
-    plan: free
-    region: oregon
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 2
+    startCommand: python app.py
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.0
       - key: SECRET_KEY
         generateValue: true
       - key: DISCORD_CLIENT_ID
         value: 1359842739835170886
-        # Replace with your actual Discord OAuth2 Client ID
       - key: DISCORD_CLIENT_SECRET
         sync: false
-        # Set this in Render dashboard under Environment Variables
       - key: DISCORD_REDIRECT_URI
-        value: https://vecho-hub-dashboard.onrender.com/auth/discord/callback
-        # Change to your actual Render URL
-      - key: PORT
-        value: 10000
-      - key: FLASK_ENV
-        value: production
-      - key: FLASK_DEBUG
-        value: false
-
-  # Optional: Background worker for auto backup and bot monitoring
-  - type: worker
-    name: vecho-hub-worker
-    runtime: python
-    repo: https://github.com/yourusername/vecho-hub
+        value: https://vecho-hub.onrender.com/auth/discord/callback
     plan: free
     region: oregon
-    buildCommand: pip install -r requirements.txt
-    startCommand: python worker.py
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.0
-      - key: SECRET_KEY
-        generateValue: true
-      - key: FLASK_ENV
-        value: production
-
-  # Optional: Redis for session management (for better performance)
-  - type: redis
-    name: vecho-hub-redis
-    plan: free
-    region: oregon
-    maxmemoryPolicy: noeviction
