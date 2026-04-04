@@ -1,0 +1,12 @@
+# .gitignore
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+vecto_dashboard.json
+pending_approvals.json
+*.log
+*.pid
+.DS_Store
+*.db
